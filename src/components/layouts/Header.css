@@ -1,0 +1,22 @@
+.header{
+	background-color: #fff;
+	padding: 0 16px;
+	font-size: 16px;
+}
+.title{
+	float: left;
+}
+.user{
+	float: right;
+	font-size: 12px;
+	height: 64px;
+	line-height: 64px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.avatar{
+	margin-right: 10px;
+	font-size: 18px;
+}
+
