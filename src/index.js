@@ -2,6 +2,8 @@ import dva from 'dva';
 import './index.css';
 import movieList from './models/movieList';
 import categoryList from './models/categoryList';
+import userAdd from './models/userAdd';
+import userList from './models/userList';
 import createLoading from 'dva-loading';
 
 // 1. Initialize
@@ -13,6 +15,8 @@ app.use(createLoading());
 // 3. Model
 app.model(movieList);
 app.model(categoryList);
+app.model(userList);
+app.model(userAdd);
 
 // 4. Router
 app.router(require('./router'));

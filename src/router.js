@@ -6,6 +6,8 @@ import MovieAdd from "./routes/admin/MovieAdd.js";
 import MovieList from "./routes/admin/MovieList.js";
 import CategoryAdd from './routes/admin/CategoryAdd.js';
 import CategoryList from "./routes/admin/CategoryList.js";
+import UserAdd from "./routes/admin/UserAdd.js";
+import UserList from './routes/admin/UserList';
 
 function RouterConfig({ history }) {
 	return (
@@ -16,6 +18,8 @@ function RouterConfig({ history }) {
 				<Route path="/admin/movie_list" component={MovieList} />
 				<Route path="/admin/category_add" component={CategoryAdd} />
 				<Route path="/admin/category_list" component={CategoryList} />
+				<Route path="/admin/user_add" component={UserAdd} />
+				<Route path="/admin/user_list" component={UserList} />
 			</Route>
 		</Router>
 	);
