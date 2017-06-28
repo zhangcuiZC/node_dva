@@ -5,6 +5,7 @@ import { Layout, Avatar } from 'antd';
 const { Header } = Layout;
 
 class AdminHeader extends React.Component {
+
 	render() {
 		return (
 			<Header className={styles.header}>
@@ -13,7 +14,7 @@ class AdminHeader extends React.Component {
 				</div>
 				<div className={styles.user}>
 					<Avatar className={styles.avatar}>{this.props.userName.slice(0,1).toUpperCase()}</Avatar>
-					<span>欢迎您，{this.props.userName}</span>
+					<span>欢迎您，{this.props.userName} <span className="ant-divider" /> <Link onClick={this.props.handleLogout}>退出</Link></span>
 				</div>
 			</Header>
 		);

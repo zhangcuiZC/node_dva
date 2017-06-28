@@ -71,7 +71,7 @@ class MainLayout extends React.Component {
 					</Menu>
 				</Sider>
 				<Layout>
-					<Header userName={this.props.userName} />
+					<Header userName={this.props.userName} handleLogout={this.props.handleLogout} />
 
 					{this.props.children}
 					

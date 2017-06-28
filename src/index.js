@@ -4,6 +4,7 @@ import movieList from './models/movieList';
 import categoryList from './models/categoryList';
 import userAdd from './models/userAdd';
 import userList from './models/userList';
+import login from './models/login';
 import createLoading from 'dva-loading';
 
 // 1. Initialize
@@ -17,6 +18,7 @@ app.model(movieList);
 app.model(categoryList);
 app.model(userList);
 app.model(userAdd);
+app.model(login);
 
 // 4. Router
 app.router(require('./router'));
