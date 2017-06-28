@@ -26,7 +26,7 @@ class MainLayout extends React.Component {
 					onCollapse={this.onCollapse}
 				>
 					<div className="logo"></div>
-					<Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['']}>
+					<Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['3']}>
 						 <Menu.Item key="3">
 						 <Link to="/admin">
 							<span>

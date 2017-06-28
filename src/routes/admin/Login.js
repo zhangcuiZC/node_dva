@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Modal } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
@@ -15,6 +15,22 @@ class LoginForm extends React.Component {
 				});
 			}
 		});
+	}
+
+	loginFail = () => {
+		const failModal = Modal.error({
+			title: '登录失败',
+			content: '用户名或密码错误'
+		});
+	}
+
+	componentDidUpdate = () => {
+		if (this.props.data.status === 0) {
+			this.loginFail();
+			this.props.dispatch({
+				type: 'login/clear'
+			});
+		}
 	}
 
 	render() {
@@ -62,7 +78,6 @@ const WrappedLoginForm = Form.create()(LoginForm);
 const mapStateToProps = (state, ownProps) => {
 	return {
 		data: state.login.data,
-		// loading: state.loading.models.userAdd
 	}
 };
 
