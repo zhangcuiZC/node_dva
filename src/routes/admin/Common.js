@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import MainLayout from '../../components/layouts/MainLayout';
 
 class CheckLogin extends React.Component {
-	componentDidMount = () => {
+	componentWillMount = () => {
 		if (!this.props.data.status) {
 			this.props.dispatch({
 				type: 'login/check'

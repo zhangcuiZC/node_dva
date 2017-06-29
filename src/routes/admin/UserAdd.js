@@ -9,12 +9,24 @@ const Option = Select.Option;
 class UserAdd extends React.Component {
 	state = {
 		categoryStyle: '1',
-		posterStyle: '1'
+		posterStyle: '1',
+		validateStatus: '0',
+		help: '0'
 	}
 
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
+			if (!values.name) {
+				this.setState({
+					validateStatus: '2',
+					help: '4'
+				});
+				return false;
+			}
+			if (this.state.validateStatus !== 1) {
+				return false;
+			}
 			if (!err) {
 				this.props.dispatch({
 					type: 'userAdd/fetch',
@@ -22,6 +34,30 @@ class UserAdd extends React.Component {
 				});
 
 			}
+		});
+	}
+
+	checkUserName = (e) => {
+		const name = this.props.form.getFieldValue('name');
+		if (name) {
+			this.setState({
+				validateStatus: '3'
+			});
+			this.props.dispatch({
+				type: 'userAdd/check',
+				payload: {
+					_data: {
+						name: name
+					}
+				}
+			});
+		}
+	}
+
+	handleFocus = (e) => {
+		this.setState({
+			validateStatus: '0',
+			help: '0'
 		});
 	}
 
@@ -56,8 +92,26 @@ class UserAdd extends React.Component {
 		}
 	}
 
+	componentWillReceiveProps = (nextProps) => {
+		if (nextProps.check.msg && this.state.validateStatus === '3') {
+			if (nextProps.check.status === 0) {
+				this.setState({
+					validateStatus: '2',
+					help: '2'
+				});
+			}else if (nextProps.check.status === 1) {
+				this.setState({
+					validateStatus: '1',
+					help: '1'
+				});
+			}
+		}
+	}
+
 	render() {
 		const { getFieldDecorator } = this.props.form;
+		const validateStatusString = ['', 'success', 'error', 'validating'];
+		const helpString = ['', '', '用户名已被注册', '', '用户名不可为空!'];
 
 		const formItemLayout = {
 			labelCol: {
@@ -94,11 +148,13 @@ class UserAdd extends React.Component {
 							{...formItemLayout}
 							label="用户名"
 							hasFeedback
-						>
+							required
+							validateStatus={validateStatusString[this.state.validateStatus]}
+							help={helpString[this.state.help]}
+						>	
 							{getFieldDecorator('name', {
-								rules: [{ required: true, message: '用户名不可为空!', whitespace: true }],
 							})(
-								<Input placeholder="请输入用户名" />
+								<Input placeholder="请输入用户名" onBlur={this.checkUserName} onFocus={this.handleFocus} />
 							)}
 						</FormItem>
 
@@ -195,7 +251,7 @@ const WrappedUserAdd = Form.create()(UserAdd);
 const mapStateToProps = (state, ownProps) => {
 	return {
 		data: state.userAdd.data,
-		// loading: state.loading.models.userAdd
+		check: state.userAdd.check
 	}
 };
 
