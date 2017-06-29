@@ -29,7 +29,7 @@ class UserAdd extends React.Component {
 			}
 			if (!err) {
 				this.props.dispatch({
-					type: 'userAdd/fetch',
+					type: 'user/add',
 					payload: { _data: values } 
 				});
 
@@ -44,7 +44,7 @@ class UserAdd extends React.Component {
 				validateStatus: '3'
 			});
 			this.props.dispatch({
-				type: 'userAdd/check',
+				type: 'user/check',
 				payload: {
 					_data: {
 						name: name
@@ -82,12 +82,12 @@ class UserAdd extends React.Component {
 		if (this.props.data.status === 1) {
 			this.signUpSuccess();
 			this.props.dispatch({
-				type: 'userAdd/clear'
+				type: 'user/clear'
 			});
 		}else if (this.props.data.status === 0) {
 			this.signUpFail();
 			this.props.dispatch({
-				type: 'userAdd/clear'
+				type: 'user/clear'
 			});
 		}
 	}
@@ -250,8 +250,8 @@ const WrappedUserAdd = Form.create()(UserAdd);
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		data: state.userAdd.data,
-		check: state.userAdd.check
+		data: state.user.data,
+		check: state.user.check
 	}
 };
 

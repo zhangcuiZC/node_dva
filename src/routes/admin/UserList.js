@@ -53,7 +53,7 @@ class UserList extends React.Component {
 					<Breadcrumb.Item>用户列表</Breadcrumb.Item>
 				</Breadcrumb>
 				<div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-					<Table columns={columns} dataSource={this.props.data} loading={this.props.loading} />
+					<Table columns={columns} dataSource={this.props.datas} loading={this.props.loading} />
 				</div>
 			</Content>
 		);
@@ -61,13 +61,13 @@ class UserList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const { data } = state.userList;
-	data.forEach(function(val, idx) {
+	const { datas } = state.user;
+	datas.forEach(function(val, idx) {
 		val.key = val._id;
 	});
 	return {
-		data,
-		loading: state.loading.models.userList
+		datas,
+		loading: state.loading.models.user
 	}
 };
 

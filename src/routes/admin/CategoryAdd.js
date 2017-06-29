@@ -53,7 +53,7 @@ class CategoryAdd extends React.Component {
 							label="分类名称"
 							hasFeedback
 						>
-							{getFieldDecorator('category', {
+							{getFieldDecorator('category_name', {
 								rules: [{ required: true, message: '分类名称不可为空!', whitespace: true }],
 							})(
 								<Input placeholder="请输入分类名称" />

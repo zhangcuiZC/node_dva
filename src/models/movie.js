@@ -1,7 +1,7 @@
-import * as movieListService from '../services/movieList';
+import * as movieService from '../services/movie';
 
 export default {
-	namespace: 'movieList',
+	namespace: 'movie',
 	state: {
 		data: []
 	},
@@ -18,7 +18,7 @@ export default {
 
 	effects: {
 		*fetch({ payload }, { call, put }) {
-			const {data} = yield call(movieListService.fetch);
+			const {data} = yield call(movieService.fetch);
 
 			yield put({ type: 'save', payload: { data } });
 		},

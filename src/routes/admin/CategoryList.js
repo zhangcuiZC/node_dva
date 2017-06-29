@@ -47,13 +47,13 @@ class CategoryList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const { data } = state.categoryList;
+	const { data } = state.category;
 	data.forEach(function(val, idx) {
 		val.key = val._id;
 	});
 	return {
 		data,
-		loading: state.loading.models.categoryList
+		loading: state.loading.models.category
 	}
 };
 

@@ -1,7 +1,7 @@
-import * as categoryListService from '../services/categoryList';
+import * as categoryService from '../services/category';
 
 export default {
-	namespace: 'categoryList',
+	namespace: 'category',
 	state: {
 		data: []
 	},
@@ -18,7 +18,7 @@ export default {
 
 	effects: {
 		*fetch({ payload }, { call, put }) {
-			const {data} = yield call(categoryListService.fetch);
+			const {data} = yield call(categoryService.fetch);
 
 			yield put({ type: 'save', payload: { data } });
 		},

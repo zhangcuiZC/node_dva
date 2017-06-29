@@ -1,6 +1,6 @@
 import request from '../utils/request';
 
-export async function fetch({ _data }) {
+export async function add({ _data }) {
 	return request('http://localhost:3000/user/signup', {
 		method:'POST', 
 		headers: { 
@@ -18,4 +18,8 @@ export async function check({ _data }) {
 		}, 
 		body: JSON.stringify(_data) 
 	});
+}
+
+export async function fetch() {
+	return request('http://localhost:3000/admin/userlist');
 }

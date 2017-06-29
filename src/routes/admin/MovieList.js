@@ -55,13 +55,13 @@ class MovieList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const { data } = state.movieList;
+	const { data } = state.movie;
 	data.forEach(function(val, idx) {
 		val.key = val._id;
 	});
 	return {
 		data,
-		loading: state.loading.models.movieList
+		loading: state.loading.models.movie
 	}
 };
 
