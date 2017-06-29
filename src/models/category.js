@@ -3,6 +3,7 @@ import * as categoryService from '../services/category';
 export default {
 	namespace: 'category',
 	state: {
+		datas: [],
 		data: []
 	},
 
@@ -18,9 +19,18 @@ export default {
 
 	effects: {
 		*fetch({ payload }, { call, put }) {
-			const {data} = yield call(categoryService.fetch);
+			const { data } = yield call(categoryService.fetch);
+
+			yield put({ type: 'save', payload: { datas: data } });
+		},
+		*add({ payload: { _data } }, { call, put }) {
+			const { data } = yield call(categoryService.add, { _data });
 
 			yield put({ type: 'save', payload: { data } });
+		},
+		*clear({ payload }, { call, put }) {
+			const data = [];
+			yield put({ type: 'save', payload: { data }});
 		},
 	},
 

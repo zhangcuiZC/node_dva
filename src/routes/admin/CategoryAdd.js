@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout, Breadcrumb } from 'antd';
 const { Content } = Layout;
-import { Form, Input, Icon, Button } from 'antd';
+import { Form, Input, Icon, Button, Modal } from 'antd';
 const FormItem = Form.Item;
 
 class CategoryAdd extends React.Component {
@@ -11,8 +11,43 @@ class CategoryAdd extends React.Component {
 		this.props.form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values);
+				this.props.dispatch({
+					type: 'category/add',
+					payload: { _data: values }
+				})
 			}
 		});
+	}
+
+	addCategorySuccess = () => {
+		const _this = this;
+		const successModal = Modal.success({
+			title: '添加成功！',
+			content: '新分类已成功添加',
+			onOk() {
+				_this.props.form.resetFields();
+			}
+		});
+	}
+	addCategoryFail = () => {
+		const failModal = Modal.error({
+			title: '添加失败！',
+			content: '新建分类失败'
+		});
+	}
+
+	componentDidUpdate = () => {
+		if (this.props.data.status === 1) {
+			this.addCategorySuccess();
+			this.props.dispatch({
+				type: 'category/clear'
+			});
+		}else if (this.props.data.status === 0) {
+			this.addCategoryFail();
+			this.props.dispatch({
+				type: 'category/clear'
+			});
+		}
 	}
 
 	render() {
@@ -70,4 +105,10 @@ class CategoryAdd extends React.Component {
 	}
 }
 const WrappedCategoryAdd = Form.create()(CategoryAdd);
-export default connect()(WrappedCategoryAdd);
+const mapStateToProps = (state, ownProps) => {
+	return {
+		data: state.category.data,
+	}
+};
+
+export default connect(mapStateToProps)(WrappedCategoryAdd);
