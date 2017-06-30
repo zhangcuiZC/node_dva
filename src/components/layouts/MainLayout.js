@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'dva/router';
 import styles from './MainLayout.css';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Modal } from 'antd';
 const { Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 import Header from './Header';
@@ -11,12 +11,24 @@ class MainLayout extends React.Component {
 		collapsed: false,
 		mode: 'inline',
 	};
+
 	onCollapse = (collapsed) => {
 		this.setState({
 			collapsed,
 			mode: collapsed ? 'vertical' : 'inline',
 		});
 	}
+
+	checkAuth = (e) => {
+		if (this.props.role < 201) {
+			const failModal = Modal.error({
+				title: '禁止访问',
+				content: '没有访问用户管理的权限'
+			});
+			e.preventDefault();
+		}
+	}
+
 	render() {
 		return (
 			<Layout>
@@ -62,10 +74,10 @@ class MainLayout extends React.Component {
 							title={<span><Icon type="user" /><span className="nav-text">用户管理</span></span>}
 						>
 							<Menu.Item key="6">
-								<Link to="/admin/user_add">添加用户</Link>
+								<Link to="/admin/user_add" onClick={this.checkAuth}>添加用户</Link>
 							</Menu.Item>
 							<Menu.Item key="7">
-								<Link to="/admin/user_list">用户列表</Link>
+								<Link to="/admin/user_list" onClick={this.checkAuth}>用户列表</Link>
 							</Menu.Item>
 						</SubMenu>
 					</Menu>

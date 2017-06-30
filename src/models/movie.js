@@ -3,6 +3,7 @@ import * as movieService from '../services/movie';
 export default {
 	namespace: 'movie',
 	state: {
+		datas: [],
 		data: []
 	},
 
@@ -12,6 +13,9 @@ export default {
 				if (pathname === '/admin/movie_list') {
 					dispatch({ type: 'fetch' });
 				}
+				if (pathname === '/admin/movie_add') {
+					dispatch({ type: 'category/fetch' });
+				}
 			});
 		},
 	},
@@ -20,8 +24,18 @@ export default {
 		*fetch({ payload }, { call, put }) {
 			const {data} = yield call(movieService.fetch);
 
+			yield put({ type: 'save', payload: { datas: data } });
+		},
+
+		*add({ payload: { _data } }, { call, put }) {
+			const { data } = yield call(movieService.add, { _data });
 			yield put({ type: 'save', payload: { data } });
 		},
+
+		*clear({ payload }, { call, put }) {
+			const data = [];
+			yield put({ type: 'save', payload: { data }});
+		}
 	},
 
 	reducers: {

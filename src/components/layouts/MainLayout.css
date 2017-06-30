@@ -1,9 +1,11 @@
 :global(.logo) {
   height: 32px;
-  background: #333;
+  /*background: #333;*/
   border-radius: 6px;
   margin: 16px;
   overflow: hidden;
+  background: url('/images/LOGO.png') no-repeat left;
+  background-size: cover;
 }
 :global(.ant-layout) {
 	height: 100vh;

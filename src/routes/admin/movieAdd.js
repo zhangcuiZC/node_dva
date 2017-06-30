@@ -1,66 +1,116 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Form, Input, Icon, Select, Button, Radio, Upload, message, Modal } from 'antd';
 const { Content } = Layout;
-import { Form, Input, Icon, Select, Button, Radio, Upload, message } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const Search = Input.Search;
 const Dragger = Upload.Dragger;
 
 class MovieAdd extends React.Component {
+	// 初始状态，控制分类和海报的类型
 	state = {
 		categoryStyle: '1',
 		posterStyle: '1'
 	}
 
+	// 提交信息
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values);
+				this.props.dispatch({
+					type: 'movie/add',
+					payload: { _data: values }
+				})
 			}
 		});
 	}
 
+	// 改变分类类型的回调
 	handleCategoryStyle = (e) => {
 		this.setState({ categoryStyle: e.target.value });
 	}
+	// 改变海报类型的回调
 	handlePosterStyle = (e) => {
 		this.setState({ posterStyle: e.target.value });
 	}
 
+	// 成功后的提示Modal
+	addMovieSuccess = (msg) => {
+		const _this = this;
+		const successModal = Modal.success({
+			title: '添加成功！',
+			content: msg,
+			onOk() {
+				_this.props.form.resetFields();
+			}
+		});
+	}
+	// 失败后的提示Modal
+	addMovieFail = (msg) => {
+		const failModal = Modal.error({
+			title: '添加失败！',
+			content: msg
+		});
+	}
 
+	// 提示后清除成功和失败的信息
+	componentDidUpdate = () => {
+		if (this.props.data.status === 1) {
+			this.addMovieSuccess(this.props.data.msg);
+			this.props.dispatch({
+				type: 'movie/clear'
+			});
+		}else if (this.props.data.status === 0) {
+			this.addMovieFail(this.props.data.msg);
+			this.props.dispatch({
+				type: 'movie/clear'
+			});
+		}
+	}
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		const { categoryStyle, posterStyle } = this.state;
+		const { category } = this.props;
 
 		let categoryInput, posterInput;
 
 		if (categoryStyle === '1') {
 			categoryInput = (
-				<Select
-					showSearch
-					placeholder="搜索并选择分类"
-					optionFilterProp="children"
-					filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-				>
-					<Option value="1">科幻</Option>
-					<Option value="2">惊悚</Option>
-					<Option value="3">剧情</Option>
-				</Select>
+				getFieldDecorator('category', {
+					rules: [{ required: true, message: '电影分类不可为空!' }],
+				})(
+					<Select
+						showSearch
+						placeholder="搜索并选择分类"
+						optionFilterProp="children"
+						filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+					>
+						{ category.map((item) => {
+							return (
+								<Option key={item._id} value={item._id}>{item.name}</Option>
+							);
+						}) }
+					</Select>
+				)
 			);
 		}else {
 			categoryInput = (
-				<Input  placeholder="请输入自定义类名" />
+				getFieldDecorator('newCategory', {
+					rules: [{ required: true, message: '电影分类不可为空!' }],
+				})(
+					<Input  placeholder="请输入自定义类名" />
+				)
 			);
 		}
 
 		const props = {
 			name: 'file',
 			multiple: false,
-			showUploadList: false,
+			showUploadList: true,
 			action: '/',
 			onChange(info) {
 				const status = info.file.status;
@@ -80,12 +130,10 @@ class MovieAdd extends React.Component {
 			);
 		}else {
 			posterInput = (
-				<div style={{ height: 120 }}>
+				<div style={{ height: 60, marginBottom: 20 }}>
 					<Dragger {...props}>
-						<p className="ant-upload-drag-icon">
-							<Icon type="inbox" />
-						</p>
-						<p className="ant-upload-text">点击或者拖动图片文件到此区域进行上传</p>
+						
+						<p className="ant-upload-hint">点击或者拖动图片文件到此区域进行上传</p>
 					</Dragger>
 				</div>
 			);
@@ -122,6 +170,9 @@ class MovieAdd extends React.Component {
 				</Breadcrumb>
 				<div style={{ padding: 44, background: '#fff', minHeight: 360 }}>
 					<Form onSubmit={this.handleSubmit}>
+						{getFieldDecorator('prev_category', {})(
+							<Input type="hidden" />
+						)}
 						<FormItem
 							{...formItemLayout}
 							label="通过豆瓣ID获取"
@@ -153,9 +204,7 @@ class MovieAdd extends React.Component {
 								<Radio.Button value="2">自定分类</Radio.Button>
 							</Radio.Group>
 
-							{getFieldDecorator('category', {
-								rules: [{ required: true, message: '电影分类不可为空!' }],
-							})(categoryInput)}
+							{ categoryInput }
 							
 						</FormItem>
 						<FormItem
@@ -238,4 +287,12 @@ class MovieAdd extends React.Component {
 	}
 }
 const WrappedMovieAdd = Form.create()(MovieAdd);
-export default connect()(WrappedMovieAdd);
+
+const mapStateToProps = (state, ownProps) => {
+	return {
+		category: state.category.datas,
+		data: state.movie.data
+	}
+}
+
+export default connect(mapStateToProps)(WrappedMovieAdd);

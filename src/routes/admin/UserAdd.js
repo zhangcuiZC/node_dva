@@ -17,6 +17,7 @@ class UserAdd extends React.Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
+			console.log(values);
 			if (!values.name) {
 				this.setState({
 					validateStatus: '2',
@@ -24,15 +25,18 @@ class UserAdd extends React.Component {
 				});
 				return false;
 			}
-			if (this.state.validateStatus !== 1) {
+			if (this.state.validateStatus !== '1') {
 				return false;
 			}
 			if (!err) {
+				console.log('dispatch');
 				this.props.dispatch({
 					type: 'user/add',
 					payload: { _data: values } 
 				});
 
+			}else {
+				console.log(err);
 			}
 		});
 	}
@@ -68,6 +72,10 @@ class UserAdd extends React.Component {
 			content: '用户已成功添加',
 			onOk() {
 				_this.props.form.resetFields();
+				_this.setState({
+					validateStatus: '0',
+					help: '0'
+				});
 			}
 		});
 	}

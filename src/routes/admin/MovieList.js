@@ -47,7 +47,7 @@ class MovieList extends React.Component {
 					<Breadcrumb.Item>电影列表</Breadcrumb.Item>
 				</Breadcrumb>
 				<div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-					<Table columns={columns} dataSource={this.props.data} loading={this.props.loading} />
+					<Table columns={columns} dataSource={this.props.datas} loading={this.props.loading} />
 				</div>
 			</Content>
 		);
@@ -55,12 +55,12 @@ class MovieList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const { data } = state.movie;
-	data.forEach(function(val, idx) {
+	const { datas } = state.movie;
+	datas.forEach(function(val, idx) {
 		val.key = val._id;
 	});
 	return {
-		data,
+		datas,
 		loading: state.loading.models.movie
 	}
 };

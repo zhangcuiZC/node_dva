@@ -17,16 +17,16 @@ class LoginForm extends React.Component {
 		});
 	}
 
-	loginFail = () => {
+	loginFail = (msg) => {
 		const failModal = Modal.error({
 			title: '登录失败',
-			content: '用户名或密码错误'
+			content: msg
 		});
 	}
 
 	componentDidUpdate = () => {
 		if (this.props.data.status === 0) {
-			this.loginFail();
+			this.loginFail(this.props.data.msg);
 			this.props.dispatch({
 				type: 'login/clear'
 			});

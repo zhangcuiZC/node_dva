@@ -19,7 +19,7 @@ class CheckLogin extends React.Component {
 
 	render() {
 		return (
-			<MainLayout userName={this.props.data.name || '验证登录信息...'} children={this.props.children} handleLogout={this.handleLogout} />
+			<MainLayout userName={this.props.data.name || '验证登录信息...'} children={this.props.children} handleLogout={this.handleLogout} role={this.props.data.role} />
 		);
 	}
 }

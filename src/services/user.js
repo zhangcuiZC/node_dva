@@ -21,5 +21,5 @@ export async function check({ _data }) {
 }
 
 export async function fetch() {
-	return request('http://localhost:3000/admin/userlist');
+	return request('http://localhost:3000/user/list');
 }
