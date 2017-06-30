@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Form, Input, Icon, Button, Modal } from 'antd';
 const { Content } = Layout;
-import { Form, Input, Icon, Button, Modal } from 'antd';
 const FormItem = Form.Item;
 
 class CategoryAdd extends React.Component {

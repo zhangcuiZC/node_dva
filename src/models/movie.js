@@ -4,7 +4,8 @@ export default {
 	namespace: 'movie',
 	state: {
 		datas: [],
-		data: []
+		data: [],
+		doubanData: []
 	},
 
 	subscriptions: {
@@ -32,9 +33,19 @@ export default {
 			yield put({ type: 'save', payload: { data } });
 		},
 
+		*fetchDouban({ payload: { _data } }, { call, put }) {
+			const { data } = yield call(movieService.fetchDouban, { _data });
+			yield put({ type: 'save', payload: { doubanData: data } });
+		},
+
 		*clear({ payload }, { call, put }) {
 			const data = [];
 			yield put({ type: 'save', payload: { data }});
+		},
+
+		*clearDouban({ payload }, { call, put }) {
+			const doubanData = [];
+			yield put({ type: 'save', payload: { doubanData }});
 		}
 	},
 

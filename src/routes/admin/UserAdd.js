@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Form, Input, Icon, Select, Button, Radio, Upload, message, Tooltip, Modal } from 'antd';
 const { Content } = Layout;
-import { Form, Input, Icon, Select, Button, Radio, Upload, message, Tooltip, Modal } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 

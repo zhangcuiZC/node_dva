@@ -11,7 +11,8 @@ class MovieAdd extends React.Component {
 	// 初始状态，控制分类和海报的类型
 	state = {
 		categoryStyle: '1',
-		posterStyle: '1'
+		posterStyle: '1',
+		hasShowMsg: '0'
 	}
 
 	// 提交信息
@@ -25,6 +26,14 @@ class MovieAdd extends React.Component {
 					payload: { _data: values }
 				})
 			}
+		});
+	}
+
+	// douban
+	handleSearch = (value) => {
+		this.props.dispatch({
+			type: 'movie/fetchDouban',
+			payload: { _data: value }
 		});
 	}
 
@@ -63,18 +72,33 @@ class MovieAdd extends React.Component {
 			this.props.dispatch({
 				type: 'movie/clear'
 			});
+			this.props.dispatch({
+				type: 'movie/clearDouban'
+			});
 		}else if (this.props.data.status === 0) {
 			this.addMovieFail(this.props.data.msg);
 			this.props.dispatch({
 				type: 'movie/clear'
 			});
 		}
+		if (this.props.doubanData.title && this.state.hasShowMsg === '0') {
+			message.success('获取豆瓣电影数据成功！');
+			this.setState({
+				hasShowMsg: '1'
+			});
+		}
+	}
+
+	componentWillUnmount = () => {
+		this.props.dispatch({
+			type: 'movie/clearDouban'
+		});
 	}
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		const { categoryStyle, posterStyle } = this.state;
-		const { category } = this.props;
+		const { category, doubanData } = this.props;
 
 		let categoryInput, posterInput;
 
@@ -181,7 +205,7 @@ class MovieAdd extends React.Component {
 							<Search
 								placeholder="请输入豆瓣电影ID"
 								style={{ width: '100%' }}
-								onSearch={value => console.log(value)}
+								onSearch={value => this.handleSearch(value)}
 							/>
 						</FormItem>
 						<FormItem
@@ -191,6 +215,7 @@ class MovieAdd extends React.Component {
 						>
 							{getFieldDecorator('title', {
 								rules: [{ required: true, message: '电影名称不可为空!', whitespace: true }],
+								initialValue: `${doubanData.title || ''}`
 							})(
 								<Input placeholder="请输入电影名称" />
 							)}
@@ -214,6 +239,7 @@ class MovieAdd extends React.Component {
 						>
 							{getFieldDecorator('director', {
 								rules: [{ required: false }],
+								initialValue: `${(doubanData.directors && doubanData.directors[0].name) || ''}`
 							})(
 								<Input placeholder="请输入导演信息" />
 							)}
@@ -225,6 +251,7 @@ class MovieAdd extends React.Component {
 						>
 							{getFieldDecorator('country', {
 								rules: [{ required: false }],
+								initialValue: `${(doubanData.countries && doubanData.countries.join('/')) || ''}`
 							})(
 								<Input placeholder="请输入国家信息" />
 							)}
@@ -247,6 +274,7 @@ class MovieAdd extends React.Component {
 						>
 							{getFieldDecorator('year', {
 								rules: [{ required: false }],
+								initialValue: `${doubanData.year || ''}`
 							})(
 								<Input placeholder="请输入上映年代" />
 							)}
@@ -261,7 +289,8 @@ class MovieAdd extends React.Component {
 							</Radio.Group>
 
 							{getFieldDecorator('poster', {
-								rules: [{ required: true, message: '海报地址不可为空!' }]
+								rules: [{ required: true, message: '海报地址不可为空!' }],
+								initialValue: `${(doubanData.images && doubanData.images.large) || ''}`
 							})(posterInput)}
 
 						</FormItem>
@@ -270,8 +299,9 @@ class MovieAdd extends React.Component {
 							label="电影简介"
 							hasFeedback
 						>
-							{getFieldDecorator('year', {
+							{getFieldDecorator('summary', {
 								rules: [{ required: false }],
+								initialValue: `${doubanData.summary || ''}`
 							})(
 								<Input type="textarea" placeholder="请输入电影简介" autosize={{ minRows: 2, maxRows: 6 }} />
 							)}
@@ -291,7 +321,8 @@ const WrappedMovieAdd = Form.create()(MovieAdd);
 const mapStateToProps = (state, ownProps) => {
 	return {
 		category: state.category.datas,
-		data: state.movie.data
+		data: state.movie.data,
+		doubanData: state.movie.doubanData
 	}
 }
 
