@@ -13,3 +13,9 @@ export async function add({ _data }) {
 		body: JSON.stringify(_data) 
 	});
 }
+
+export async function del({ _data }) {
+	return request(`http://localhost:3000/category/list/${_data}`, {
+		method:'DELETE',
+	});
+}

@@ -105,7 +105,6 @@ class MovieAdd extends React.Component {
 		if (categoryStyle === '1') {
 			categoryInput = (
 				getFieldDecorator('category', {
-					// rules: [{ required: true, message: '电影分类不可为空!' }],
 				})(
 					<Select
 						showSearch
@@ -124,7 +123,6 @@ class MovieAdd extends React.Component {
 		}else {
 			categoryInput = (
 				getFieldDecorator('newCategory', {
-					// rules: [{ required: true, message: '电影分类不可为空!' }],
 				})(
 					<Input  placeholder="请输入自定义类名" />
 				)

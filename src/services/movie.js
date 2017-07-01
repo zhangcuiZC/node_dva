@@ -26,9 +26,5 @@ export async function fetchDouban({ _data }) {
 export async function del({ _data }) {
 	return request(`http://localhost:3000/admin/list/${_data}`, {
 		method:'DELETE', 
-		// headers: { 
-		// 	'Content-Type': 'application/json' 
-		// }, 
-		// body: JSON.stringify(_data) 
 	});
 }
