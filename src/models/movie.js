@@ -46,7 +46,15 @@ export default {
 		*clearDouban({ payload }, { call, put }) {
 			const doubanData = [];
 			yield put({ type: 'save', payload: { doubanData }});
-		}
+		},
+
+		*delete({ payload: { _data, cb } }, { call, put }) {
+			const { data } = yield call(movieService.del, { _data });
+			cb(data.status);
+			yield put({
+				type: 'fetch'
+			})			
+		},
 	},
 
 	reducers: {

@@ -37,7 +37,7 @@ class MainLayout extends React.Component {
 					collapsed={this.state.collapsed}
 					onCollapse={this.onCollapse}
 				>
-					<div className="logo"></div>
+					<div className="logo"><Icon type="appstore" />&nbsp;&nbsp;&nbsp;&nbsp;ZhangCui Movie Admin</div>
 					<Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={['3']}>
 						 <Menu.Item key="3">
 						 <Link to="/admin">
@@ -88,7 +88,7 @@ class MainLayout extends React.Component {
 					{this.props.children}
 					
 					<Footer style={{ textAlign: 'center' }}>
-						Zhangcui ©2016 Created by Ant UED
+						Admin ©2016 &lt;/&gt; by ZhangCui
 					</Footer>
 				</Layout>
 			</Layout>
