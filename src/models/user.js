@@ -37,7 +37,15 @@ export default {
 		*clear({ payload }, { call, put }) {
 			const data = [];
 			yield put({ type: 'save', payload: { data }});
-		}
+		},
+
+		*delete({ payload: { _data, cb } }, { call, put }) {
+			const { data } = yield call(userService.del, { _data });
+			cb(data.status);
+			yield put({
+				type: 'fetch'
+			});
+		},
 	},
 
 	reducers: {

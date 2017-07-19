@@ -23,3 +23,7 @@ export async function check({ _data }) {
 export async function fetch() {
 	return request('http://localhost:3000/user/list');
 }
+
+export async function del({ _data }) {
+	return request(`http://localhost:3000/user/delete/${_data}`);
+}

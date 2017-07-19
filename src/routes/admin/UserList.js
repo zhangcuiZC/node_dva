@@ -1,9 +1,27 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Breadcrumb, Table, Icon } from 'antd';
+import { Layout, Breadcrumb, Table, Icon, Popconfirm, message } from 'antd';
 const { Content } = Layout;
 
 class UserList extends React.Component {
+	handleConfirm = (_id) => {
+		this.props.dispatch({
+			type: 'user/delete',
+			payload: {
+				_data: _id,
+				cb: this.deleteMsg
+			}
+		})
+	}
+
+	deleteMsg = (status) => {
+		if (status === 1) {
+			message.success('删除成功');
+		}else {
+			message.error('删除失败');
+		}
+	}
+
 	render() {
 		const columns = [{
 			title: '用户名',
@@ -41,7 +59,9 @@ class UserList extends React.Component {
 				<span>
 					<a href="#">修改</a>
 					<span className="ant-divider" />
-					<a href="#">删除</a>
+					<Popconfirm title="确认删除吗？" onConfirm={this.handleConfirm.bind(null, record._id)}>
+						<a href="#">删除</a>
+					</Popconfirm>
 				</span>
 			),
 		}];
