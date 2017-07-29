@@ -24,8 +24,9 @@ export default {
 			yield put({ type: 'save', payload: { datas: data } });
 		},
 
-		*add({ payload: { _data } }, { call, put }) {
+		*add({ payload: { _data, cb } }, { call, put }) {
 			const { data } = yield call(userService.add, { _data });
+			cb(data.status);
 			yield put({ type: 'save', payload: { data } });
 		},
 
@@ -34,10 +35,10 @@ export default {
 			yield put({ type: 'save', payload: { check: data } });
 		},
 		
-		*clear({ payload }, { call, put }) {
-			const data = [];
-			yield put({ type: 'save', payload: { data }});
-		},
+		// *clear({ payload }, { call, put }) {
+		// 	const data = [];
+		// 	yield put({ type: 'save', payload: { data }});
+		// },
 
 		*delete({ payload: { _data, cb } }, { call, put }) {
 			const { data } = yield call(userService.del, { _data });

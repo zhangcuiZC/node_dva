@@ -12,39 +12,29 @@ class CategoryAdd extends React.Component {
 				console.log('Received values of form: ', values);
 				this.props.dispatch({
 					type: 'category/add',
-					payload: { _data: values }
+					payload: {
+						_data: values,
+						cb: this.addCategoryMsg
+					}
 				})
 			}
 		});
 	}
 
-	addCategorySuccess = () => {
+	addCategoryMsg = (status) => {
 		const _this = this;
-		const successModal = Modal.success({
-			title: '添加成功！',
-			content: '新分类已成功添加',
-			onOk() {
-				_this.props.form.resetFields();
-			}
-		});
-	}
-	addCategoryFail = () => {
-		const failModal = Modal.error({
-			title: '添加失败！',
-			content: '新建分类失败'
-		});
-	}
-
-	componentDidUpdate = () => {
-		if (this.props.data.status === 1) {
-			this.addCategorySuccess();
-			this.props.dispatch({
-				type: 'category/clear'
+		if (status === 1) {
+			const successModal = Modal.success({
+				title: '添加成功！',
+				content: '新分类已成功添加',
+				onOk() {
+					_this.props.form.resetFields();
+				}
 			});
-		}else if (this.props.data.status === 0) {
-			this.addCategoryFail();
-			this.props.dispatch({
-				type: 'category/clear'
+		}else {
+			const failModal = Modal.error({
+				title: '添加失败！',
+				content: '新建分类失败'
 			});
 		}
 	}

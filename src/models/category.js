@@ -23,16 +23,11 @@ export default {
 
 			yield put({ type: 'save', payload: { datas: data } });
 		},
-		*add({ payload: { _data } }, { call, put }) {
+		*add({ payload: { _data, cb } }, { call, put }) {
 			const { data } = yield call(categoryService.add, { _data });
-
+			cb(data.status);
 			yield put({ type: 'save', payload: { data } });
 		},
-		*clear({ payload }, { call, put }) {
-			const data = [];
-			yield put({ type: 'save', payload: { data }});
-		},
-
 		*delete({ payload: { _data, cb } }, { call, put }) {
 			const { data } = yield call(categoryService.del, { _data });
 			cb(data.status);

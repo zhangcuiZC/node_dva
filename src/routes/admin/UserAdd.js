@@ -31,7 +31,10 @@ class UserAdd extends React.Component {
 				console.log('dispatch');
 				this.props.dispatch({
 					type: 'user/add',
-					payload: { _data: values } 
+					payload: { 
+						_data: values,
+						cb: this.signMsg
+					} 
 				});
 
 			}else {
@@ -64,37 +67,24 @@ class UserAdd extends React.Component {
 		});
 	}
 
-	signUpSuccess = () => {
+	signMsg = (status) => {
 		const _this = this;
-		const successModal = Modal.success({
-			title: '添加成功！',
-			content: '用户已成功添加',
-			onOk() {
-				_this.props.form.resetFields();
-				_this.setState({
-					validateStatus: '0',
-					help: '0'
-				});
-			}
-		});
-	}
-	signUpFail = () => {
-		const failModal = Modal.error({
-			title: '添加失败！',
-			content: '用户名已被使用'
-		});
-	}
-
-	componentDidUpdate = () => {
-		if (this.props.data.status === 1) {
-			this.signUpSuccess();
-			this.props.dispatch({
-				type: 'user/clear'
+		if (status === 1) {
+			const successModal = Modal.success({
+				title: '添加成功！',
+				content: '用户已成功添加',
+				onOk() {
+					_this.props.form.resetFields();
+					_this.setState({
+						validateStatus: '0',
+						help: '0'
+					});
+				}
 			});
-		}else if (this.props.data.status === 0) {
-			this.signUpFail();
-			this.props.dispatch({
-				type: 'user/clear'
+		}else {
+			const failModal = Modal.error({
+				title: '添加失败！',
+				content: '用户名已被使用'
 			});
 		}
 	}

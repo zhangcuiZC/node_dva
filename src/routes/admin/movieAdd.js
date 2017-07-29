@@ -23,7 +23,10 @@ class MovieAdd extends React.Component {
 				console.log('Received values of form: ', values);
 				this.props.dispatch({
 					type: 'movie/add',
-					payload: { _data: values }
+					payload: {
+						_data: values,
+						cb: this.addMovieMsg
+					}
 				})
 			}
 		});
@@ -46,41 +49,26 @@ class MovieAdd extends React.Component {
 		this.setState({ posterStyle: e.target.value });
 	}
 
-	// 成功后的提示Modal
-	addMovieSuccess = (msg) => {
+	// 提示Modal
+	addMovieMsg = (data) => {
 		const _this = this;
-		const successModal = Modal.success({
-			title: '添加成功！',
-			content: msg,
-			onOk() {
-				_this.props.form.resetFields();
-			}
-		});
-	}
-	// 失败后的提示Modal
-	addMovieFail = (msg) => {
-		const failModal = Modal.error({
-			title: '添加失败！',
-			content: msg
-		});
-	}
-
-	// 提示后清除成功和失败的信息
-	componentDidUpdate = () => {
-		if (this.props.data.status === 1) {
-			this.addMovieSuccess(this.props.data.msg);
-			this.props.dispatch({
-				type: 'movie/clear'
+		if (data.status === 1) {
+			const successModal = Modal.success({
+				title: '添加成功！',
+				content: data.msg,
+				onOk() {
+					_this.props.form.resetFields();
+				}
 			});
-			this.props.dispatch({
-				type: 'movie/clearDouban'
-			});
-		}else if (this.props.data.status === 0) {
-			this.addMovieFail(this.props.data.msg);
-			this.props.dispatch({
-				type: 'movie/clear'
+		}else {
+			const failModal = Modal.error({
+				title: '添加失败！',
+				content: data.msg
 			});
 		}
+	}
+
+	componentDidUpdate = () => {
 		if (this.props.doubanData.title && this.state.hasShowMsg === '0') {
 			message.success('获取豆瓣电影数据成功！');
 			this.setState({
