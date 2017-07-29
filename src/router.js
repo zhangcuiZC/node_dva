@@ -10,9 +10,12 @@ import UserAdd from "./routes/admin/UserAdd.js";
 import UserList from './routes/admin/UserList';
 import Login from './routes/admin/Login';
 
+import Home from './routes/home/Index';
+
 function RouterConfig({ history }) {
 	return (
 		<Router history={history}>
+			<Route path="/" component={Home} />
 			<Route path="/admin" component={Common}>
 				<IndexRoute component={AdminIndex} />
 				<Route path="movie_add" component={MovieAdd} />

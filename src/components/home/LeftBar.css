@@ -1,0 +1,68 @@
+:global(input) {
+	border-radius: 0 !important;
+	background-color: rgba(255,255,255,.4) !important;
+}
+:global(button) {
+	border-radius: 0 !important;
+}
+.leftbar{
+	z-index: 2;
+	width: 20%;
+	/*max-width: 300px;*/
+	height: 100vh;
+	overflow-y: auto;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: rgba(255,255,255,.7);
+	box-sizing: border-box;
+	padding-top: 20px;
+	box-shadow: 1px 0 20px 0 rgba(29,43,57,0.5);
+}
+.code{
+	line-height: 25px;
+	padding: 0 20px;
+}
+.title{
+	padding: 10px 20px;
+	padding-bottom: 0;
+	font-size: 28px;
+	
+}
+.vice_title{
+	color: #6d6e71;
+}
+.search{
+	padding: 20px;
+	border-bottom: 1px solid #eee;
+}
+.category{
+	padding: 20px;
+	line-height: 40px;
+	height: 60vh;
+	overflow-y: auto;
+	border-bottom: 1px solid #eee;
+}
+:global(.c_item.active){
+	border-bottom: 1px solid #ed1b25;
+	color: #ed1b25;
+}
+:global(.c_item){
+	box-sizing: border-box;
+	height: 40px;
+}
+.ci_name{
+	color: inherit;
+	float: left;
+}
+.ci_num{
+	float: right;
+	color: inherit;
+}
+.user{
+	padding: 20px;
+}
+.u_title{
+	margin-bottom: 12px;
+	height: 18px;
+}

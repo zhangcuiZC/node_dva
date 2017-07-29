@@ -1,0 +1,40 @@
+.content{
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: flex-start;
+}
+:global(.co_item){
+	flex: 1;
+	height: 100%;
+	box-sizing: border-box;
+	transition: all 0.4s;
+	background: no-repeat center;
+	background-size: cover;
+}
+:global(.co_item:nth-child(1)){
+	flex: 2;
+}
+:global(.co_item:nth-child(1):hover){
+	flex: 2.1;
+}
+:global(.co_item:not(:nth-child(1)):hover){
+	flex: 1.2;
+}
+.layer{
+	position: absolute;
+	width: 20%;
+	height: 100vh;
+	filter: blur(5px);
+	overflow: hidden;
+}
+.layer_i{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 200%;
+	height: 100vh;
+	background: no-repeat center;
+	background-size: cover;
+}
