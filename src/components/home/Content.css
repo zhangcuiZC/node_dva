@@ -12,6 +12,7 @@
 	transition: all 0.4s;
 	background: no-repeat center;
 	background-size: cover;
+	position: relative;
 }
 :global(.co_item:nth-child(1)){
 	flex: 2;

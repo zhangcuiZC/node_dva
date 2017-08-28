@@ -5,19 +5,22 @@
 :global(button) {
 	border-radius: 0 !important;
 }
+:global(.leftBarHide){
+	transform: translateX(-100%);
+}
 .leftbar{
 	z-index: 2;
 	width: 20%;
-	/*max-width: 300px;*/
 	height: 100vh;
-	overflow-y: auto;
 	position: absolute;
 	left: 0;
 	top: 0;
-	background-color: rgba(255,255,255,.7);
+	background-color: rgba(255,255,255,.8);
 	box-sizing: border-box;
 	padding-top: 20px;
 	box-shadow: 1px 0 20px 0 rgba(29,43,57,0.5);
+	transition: all 0.4s;
+	z-index: 999;
 }
 .code{
 	line-height: 25px;
@@ -65,4 +68,14 @@
 .u_title{
 	margin-bottom: 12px;
 	height: 18px;
+}
+.arrow{
+	float: right;
+	cursor: pointer;
+}
+:global(.leftBarHide) .arrow{
+	transform: translateX(60px) rotateZ(180deg) scale(2);
+}
+:global(.leftBarHide) .arrow i {
+	color: #fff !important;
 }

@@ -1,0 +1,22 @@
+.infoBox{
+	position: absolute;
+	width: 70%;
+	max-width: 240px;
+	background-color: rgba(0,0,0,.5);
+	right: 20px;
+	bottom: 150px;
+	font-size: 12px;
+	text-align: right;
+	color: #fff;
+	font-weight: lighter;
+	box-sizing: border-box;
+	padding: 8px;
+}
+.title{
+	font-size: 16px;
+}
+.summary{
+	line-height: 1.3em;
+	max-height: 5.2em;
+	overflow: hidden;
+}

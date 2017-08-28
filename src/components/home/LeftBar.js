@@ -6,13 +6,24 @@ const Search = Input.Search;
 const FormItem = Form.Item;
 
 class LeftBar extends React.Component {
+	state = {
+		hide: false
+	}
+
+	hideLeftBar() {
+		this.setState({
+			hide: !this.state.hide
+		})
+	}
+
 	render() {
 		const { getFieldDecorator } = this.props.form;
+		const isHide = this.state.hide ? 'leftBarHide' : '';
 		return (
-			<div className={styles.leftbar}>
+			<div className={`${styles.leftbar} ${isHide}`}>
 				<div className={styles.code}>
 					<Icon type="github" style={{fontSize: 16, color: '#333'}} />
-					<span style={{float:'right'}}><Icon type="arrow-left" style={{fontSize: 16, color: '#333'}} /></span>
+					<span className={styles.arrow} onClick={this.hideLeftBar.bind(this)}><Icon type="arrow-left" style={{fontSize: 16, color: '#333'}} /></span>
 				</div>
 				<div className={styles.title}>
 					张璀电影社区
